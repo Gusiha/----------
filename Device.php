@@ -6,9 +6,9 @@ abstract class Device extends SchemaSerializable
 {
     #[ExportableAttribute]
     protected int $id;
-    #[ExportableAttribute]
+    #[ExportableAttribute("Тип")]
     protected string $type;
-    #[ExportableAttribute("марка")]
+    #[ExportableAttribute("Марка")]
     protected string $vendor;
     #[ExportableAttribute]
     protected string $modelNumber;

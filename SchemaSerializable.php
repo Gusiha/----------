@@ -14,27 +14,29 @@ abstract class SchemaSerializable
     {
 
         $reflectionClass = new ReflectionClass($this);
-        echo "Class Attributes: " . PHP_EOL;
-        print_r($reflectionClass->getAttributes());
 
         //Тут можно и без ReflectionProperty::IS_PROTECTED
-        $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
-        echo "Properies Attributes: " . PHP_EOL;
-        print_r($properties);
+        $properties = $reflectionClass->getProperties();
         $result = [];
 
         foreach ($properties as $property) {
             $attributes = $property->getAttributes(ExportableAttribute::class);
-            print_r($attributes);
 
+            if (empty($attributes)) {
+                continue;
+            }
 
-            $exportedAttribute = $attributes[0]->newInstance();
+            $exportedAttributeName = $attributes[0]->newInstance()->name;
             $propertyType = $property->getType();
             $propertyName = $property->getName();
 
-            $exportedName = $exportedAttribute->name ?: $propertyName;
-            $result[$exportedName] = $propertyType;
+            $exportedName = $exportedAttributeName ?: $propertyName;
+            $result[$exportedName] = $propertyType->getName();
+            if ($propertyType->allowsNull()) {
+                $result[$exportedName] = "?" . $result[$exportedName];
+            }
         }
+        print_r($result);
         return (object) $result;
     }
 }
