@@ -14,4 +14,4 @@ $device = new CountableDevice(
     10
 );
 
-$device->getSchema();
+echo $device->getSchema();

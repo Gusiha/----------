@@ -10,7 +10,7 @@
 abstract class SchemaSerializable
 {
     /**@return string Список необходмых полей JSON для создания объекта*/
-    public function getSchema()
+    public function getSchema(): string
     {
 
         $reflectionClass = new ReflectionClass($this);
@@ -36,7 +36,6 @@ abstract class SchemaSerializable
                 $result[$exportedName] = "?" . $result[$exportedName];
             }
         }
-        print_r($result);
-        return (object) $result;
+        return json_encode((object)$result, JSON_PRETTY_PRINT);
     }
 }

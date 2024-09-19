@@ -5,7 +5,7 @@
 #[ExportableAttribute]
 class CountableDevice extends Device
 {
-    #[ExportableAttribute("кол-во")]
+    #[ExportableAttribute("Amount")]
     private int $amount;
 
     public function __construct(int $id, string $type, string $vendor, string $modelName, string $modelNumber, ?string $partCatalogLink, int $amount)
